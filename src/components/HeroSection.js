@@ -2,12 +2,15 @@ import React from 'react';
 import styled from 'styled-components';
 
 const HeroContainer = styled.section`
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
   color: white;
   padding: 120px 0;
   text-align: center;
   position: relative;
   overflow: hidden;
+  min-height: calc(100vh - var(--banner-height)); /* 根据Figma的CSS变量调整 */
+  display: flex;
+  align-items: center;
 `;
 
 const HeroContent = styled.div`
@@ -53,7 +56,7 @@ const HeroButtons = styled.div`
 
 const CTAButton = styled.button`
   background-color: white;
-  color: #667eea;
+  color: var(--primary-color);
   border: none;
   padding: 16px 32px;
   border-radius: 8px;
@@ -62,6 +65,9 @@ const CTAButton = styled.button`
   cursor: pointer;
   transition: all 0.3s ease;
   text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 
   &:hover {
     transform: translateY(-2px);
@@ -79,10 +85,13 @@ const SecondaryButton = styled.button`
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 
   &:hover {
     background-color: white;
-    color: #667eea;
+    color: var(--primary-color);
   }
 `;
 

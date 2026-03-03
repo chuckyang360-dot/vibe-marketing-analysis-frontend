@@ -3,16 +3,40 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
 const CTAContainer = styled.section`
-  background: linear-gradient(135deg, var(--primary-color) 0%, #1e40af 100%);
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
   color: white;
-  padding: 80px 0;
+  padding: 120px 0;
   text-align: center;
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at top right, rgba(255,255,255,0.1) 0%, transparent 50%);
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: rgba(255,255,255,0.2);
+  }
 `;
 
 const CTAContent = styled.div`
-  max-width: 600px;
+  max-width: 720px;
   margin: 0 auto;
   padding: 0 20px;
+  position: relative;
+  z-index: 1;
 `;
 
 const CTATitle = styled.h2`
