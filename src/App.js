@@ -42,7 +42,6 @@ function ScrollToTop() {
 
 function App() {
   const location = useLocation();
-  const isHomePage = location.pathname === '/';
 
   return (
     <AppContainer>
