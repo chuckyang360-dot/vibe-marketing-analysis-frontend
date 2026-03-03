@@ -1,14 +1,16 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Routes, Route, useLocation } from 'react-router-dom';
+import { Routes, Route, useLocation, Navigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import HomePage from './pages/HomePage';
-import ProductPage from './pages/ProductPage';
-import CasePage from './pages/CasePage';
-import ContactPage from './pages/ContactPage';
-import LoginPage from './pages/LoginPage';
+import SeoPage from './pages/SeoPage';
+import RedditPage from './pages/RedditPage';
+import TwitterPage from './pages/TwitterPage';
+import ContentPage from './pages/ContentPage';
+import SummaryPage from './pages/SummaryPage';
+import HistoryPage from './pages/HistoryPage';
 
 // 主应用容器样式
 const AppContainer = styled.div`
@@ -48,11 +50,14 @@ function App() {
       <MainContent hasFixedHeader={true}>
         <PageTransitionWrapper>
           <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/product" element={<ProductPage />} />
-            <Route path="/case" element={<CasePage />} />
-            <Route path="/contact" element={<ContactPage />} />
-            <Route path="/login" element={<LoginPage />} />
+            <Route path="/" element={<Navigate to="/home" replace />} />
+            <Route path="/home" element={<HomePage />} />
+            <Route path="/seo" element={<SeoPage />} />
+            <Route path="/reddit" element={<RedditPage />} />
+            <Route path="/twitter" element={<TwitterPage />} />
+            <Route path="/content" element={<ContentPage />} />
+            <Route path="/summary" element={<SummaryPage />} />
+            <Route path="/history" element={<HistoryPage />} />
           </Routes>
         </PageTransitionWrapper>
       </MainContent>

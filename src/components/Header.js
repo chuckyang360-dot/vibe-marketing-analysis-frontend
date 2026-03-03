@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import { Link, NavLink as RouterNavLink } from 'react-router-dom';
 
 const HeaderContainer = styled.header`
   position: fixed;
@@ -60,7 +60,7 @@ const NavItem = styled.li`
   position: relative;
 `;
 
-const NavLink = styled(Link)`
+const NavLink = styled(RouterNavLink)`
   text-decoration: none;
   color: var(--text-primary);
   font-weight: 500;
@@ -174,7 +174,7 @@ const MobileNavMenu = styled.ul`
   gap: 24px;
 `;
 
-const MobileNavLink = styled(Link)`
+const MobileNavLink = styled(RouterNavLink)`
   text-decoration: none;
   color: var(--text-primary);
   font-weight: 500;
@@ -231,7 +231,7 @@ function Header() {
     <>
       <HeaderContainer className={scrolled ? 'scrolled' : ''}>
         <NavContainer>
-          <Logo to="/" onClick={closeMobileMenu}>
+          <Logo to="/home" onClick={closeMobileMenu}>
             <span>📊</span>
             Vibe Marckrting
           </Logo>
@@ -243,8 +243,8 @@ function Header() {
           <NavMenu>
             <NavItem>
               <NavLink
-                to="/"
-                className={({ isActive }) => isActive ? 'active' : ''}
+                to="/home"
+                className={({ isActive }) => (isActive ? 'active' : '')}
                 onClick={closeMobileMenu}
               >
                 首页
@@ -252,29 +252,56 @@ function Header() {
             </NavItem>
             <NavItem>
               <NavLink
-                to="/product"
-                className={({ isActive }) => isActive ? 'active' : ''}
+                to="/seo"
+                className={({ isActive }) => (isActive ? 'active' : '')}
                 onClick={closeMobileMenu}
               >
-                产品
+                SEO分析
               </NavLink>
             </NavItem>
             <NavItem>
               <NavLink
-                to="/case"
-                className={({ isActive }) => isActive ? 'active' : ''}
+                to="/reddit"
+                className={({ isActive }) => (isActive ? 'active' : '')}
                 onClick={closeMobileMenu}
               >
-                案例
+                Reddit热点
               </NavLink>
             </NavItem>
             <NavItem>
               <NavLink
-                to="/contact"
-                className={({ isActive }) => isActive ? 'active' : ''}
+                to="/twitter"
+                className={({ isActive }) => (isActive ? 'active' : '')}
                 onClick={closeMobileMenu}
               >
-                联系
+                X舆情分析
+              </NavLink>
+            </NavItem>
+            <NavItem>
+              <NavLink
+                to="/content"
+                className={({ isActive }) => (isActive ? 'active' : '')}
+                onClick={closeMobileMenu}
+              >
+                内容生成
+              </NavLink>
+            </NavItem>
+            <NavItem>
+              <NavLink
+                to="/summary"
+                className={({ isActive }) => (isActive ? 'active' : '')}
+                onClick={closeMobileMenu}
+              >
+                数据总结
+              </NavLink>
+            </NavItem>
+            <NavItem>
+              <NavLink
+                to="/history"
+                className={({ isActive }) => (isActive ? 'active' : '')}
+                onClick={closeMobileMenu}
+              >
+                历史记录
               </NavLink>
             </NavItem>
             <NavItem>
@@ -291,10 +318,13 @@ function Header() {
 
       <MobileMenuPanel isOpen={mobileMenuOpen}>
         <MobileNavMenu>
-          <li><MobileNavLink to="/" className={({ isActive }) => isActive ? 'active' : ''} onClick={closeMobileMenu}>首页</MobileNavLink></li>
-          <li><MobileNavLink to="/product" className={({ isActive }) => isActive ? 'active' : ''} onClick={closeMobileMenu}>产品</MobileNavLink></li>
-          <li><MobileNavLink to="/case" className={({ isActive }) => isActive ? 'active' : ''} onClick={closeMobileMenu}>案例</MobileNavLink></li>
-          <li><MobileNavLink to="/contact" className={({ isActive }) => isActive ? 'active' : ''} onClick={closeMobileMenu}>联系</MobileNavLink></li>
+          <li><MobileNavLink to="/home" className={({ isActive }) => (isActive ? 'active' : '')} onClick={closeMobileMenu}>首页</MobileNavLink></li>
+          <li><MobileNavLink to="/seo" className={({ isActive }) => (isActive ? 'active' : '')} onClick={closeMobileMenu}>SEO分析</MobileNavLink></li>
+          <li><MobileNavLink to="/reddit" className={({ isActive }) => (isActive ? 'active' : '')} onClick={closeMobileMenu}>Reddit热点</MobileNavLink></li>
+          <li><MobileNavLink to="/twitter" className={({ isActive }) => (isActive ? 'active' : '')} onClick={closeMobileMenu}>X舆情分析</MobileNavLink></li>
+          <li><MobileNavLink to="/content" className={({ isActive }) => (isActive ? 'active' : '')} onClick={closeMobileMenu}>内容生成</MobileNavLink></li>
+          <li><MobileNavLink to="/summary" className={({ isActive }) => (isActive ? 'active' : '')} onClick={closeMobileMenu}>数据总结</MobileNavLink></li>
+          <li><MobileNavLink to="/history" className={({ isActive }) => (isActive ? 'active' : '')} onClick={closeMobileMenu}>历史记录</MobileNavLink></li>
         </MobileNavMenu>
         <MobileLoginButton to="/login" onClick={closeMobileMenu}>登录</MobileLoginButton>
       </MobileMenuPanel>
