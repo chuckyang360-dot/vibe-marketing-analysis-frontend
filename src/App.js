@@ -22,7 +22,7 @@ const AppContainer = styled.div`
 const MainContent = styled.main`
   flex: 1;
   padding: 0;
-  margin-top: ${props => props.hasFixedHeader ? '80px' : '0'}; /* 为固定头部留出空间 */
+  margin-top: ${props => (props.hasFixedHeader ? '80px' : '0')}; /* 为固定头部留出空间 */
 `;
 
 // 页面过渡动画包装器
@@ -41,8 +41,6 @@ function ScrollToTop() {
 }
 
 function App() {
-  const location = useLocation();
-
   return (
     <AppContainer>
       <Header />
@@ -64,3 +62,4 @@ function App() {
 }
 
 export default App;
+
