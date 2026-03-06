@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { Link, NavLink as RouterNavLink } from 'react-router-dom';
+import api from '../services/api';
 
 const HeaderContainer = styled.header`
   position: fixed;
@@ -96,7 +97,7 @@ const NavLink = styled(RouterNavLink)`
   }
 `;
 
-const LoginButton = styled(Link)`
+const LoginButton = styled.button`
   background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
   color: white;
   padding: 10px 24px;
@@ -106,11 +107,35 @@ const LoginButton = styled(Link)`
   transition: all 0.3s ease;
   border: 1px solid transparent;
   box-shadow: 0 4px 15px rgba(37, 99, 235, 0.2);
+  cursor: pointer;
 
   &:hover {
     transform: translateY(-2px);
     box-shadow: 0 6px 20px rgba(37, 99, 235, 0.3);
     background: linear-gradient(135deg, var(--primary-dark), var(--primary-color));
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+`;
+
+const LogoutButton = styled.button`
+  background: linear-gradient(135deg, var(--error-color), var(--error-dark));
+  color: white;
+  padding: 10px 24px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  border: 1px solid transparent;
+  box-shadow: 0 4px 15px rgba(239, 68, 68, 0.2);
+  cursor: pointer;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(239, 68, 68, 0.3);
+    background: linear-gradient(135deg, var(--error-dark), var(--error-color));
   }
 
   &:active {
@@ -192,7 +217,7 @@ const MobileNavLink = styled(RouterNavLink)`
   }
 `;
 
-const MobileLoginButton = styled(Link)`
+const MobileLoginButton = styled.button`
   display: block;
   background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
   color: white;
@@ -203,6 +228,8 @@ const MobileLoginButton = styled(Link)`
   text-align: center;
   margin-top: 16px;
   transition: all 0.3s ease;
+  border: none;
+  cursor: pointer;
 
   &:hover {
     transform: translateY(-2px);
@@ -210,9 +237,30 @@ const MobileLoginButton = styled(Link)`
   }
 `;
 
+const MobileLogoutButton = styled.button`
+  display: block;
+  background: linear-gradient(135deg, var(--error-color), var(--error-dark));
+  color: white;
+  padding: 12px 20px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 500;
+  text-align: center;
+  margin-top: 16px;
+  transition: all 0.3s ease;
+  border: none;
+  cursor: pointer;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3);
+  }
+`;
+
 function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [user, setUser] = useState(null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -220,8 +268,26 @@ function Header() {
     };
 
     window.addEventListener('scroll', handleScroll);
+
+    // 检查用户登录状态
+    const savedUser = localStorage.getItem('user');
+    if (savedUser) {
+      setUser(JSON.parse(savedUser));
+    }
+
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  const handleGoogleLogin = () => {
+    // 调用 Google 登录 API
+    window.location.href = `${api.API_BASE_URL}/auth/login/google`;
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem('user');
+    setUser(null);
+    window.location.href = '/home';
+  };
 
   const closeMobileMenu = () => {
     setMobileMenuOpen(false);
@@ -305,7 +371,13 @@ function Header() {
               </NavLink>
             </NavItem>
             <NavItem>
-              <LoginButton to="/login" onClick={closeMobileMenu}>登录</LoginButton>
+              {user ? (
+                <LogoutButton onClick={handleLogout}>
+                  登出 ({user.email})
+                </LogoutButton>
+              ) : (
+                <LoginButton onClick={handleGoogleLogin}>Google 登录</LoginButton>
+              )}
             </NavItem>
           </NavMenu>
         </NavContainer>
@@ -326,7 +398,15 @@ function Header() {
           <li><MobileNavLink to="/summary" className={({ isActive }) => (isActive ? 'active' : '')} onClick={closeMobileMenu}>数据总结</MobileNavLink></li>
           <li><MobileNavLink to="/history" className={({ isActive }) => (isActive ? 'active' : '')} onClick={closeMobileMenu}>历史记录</MobileNavLink></li>
         </MobileNavMenu>
-        <MobileLoginButton to="/login" onClick={closeMobileMenu}>登录</MobileLoginButton>
+        {user ? (
+          <MobileLogoutButton onClick={handleLogout}>
+            登出 ({user.email})
+          </MobileLogoutButton>
+        ) : (
+          <MobileLoginButton onClick={handleGoogleLogin}>
+            Google 登录
+          </MobileLoginButton>
+        )}
       </MobileMenuPanel>
     </>
   );
